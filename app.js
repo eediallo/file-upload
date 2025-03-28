@@ -1,22 +1,18 @@
-require('dotenv').config();
-require('express-async-errors');
+import "dotenv/config";
+import "express-async-errors";
+import express from "express";
+import { connectDB } from "./db/connect.js";
+import { notFound } from "./middleware/not-found.js";
+import { errorHandlerMiddleware } from "./middleware/error-handler.js";
 
-const express = require('express');
 const app = express();
 
-// database
-const connectDB = require('./db/connect');
-
-// error handler
-const notFoundMiddleware = require('./middleware/not-found');
-const errorHandlerMiddleware = require('./middleware/error-handler');
-
-app.get('/', (req, res) => {
-  res.send('<h1>File Upload Starter</h1>');
+app.get("/", (req, res) => {
+  res.send("<h1>File Upload Starter</h1>");
 });
 
 // middleware
-app.use(notFoundMiddleware);
+app.use(notFound);
 app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 3000;
