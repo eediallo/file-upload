@@ -4,12 +4,16 @@ import express from "express";
 import { connectDB } from "./db/connect.js";
 import { notFound } from "./middleware/not-found.js";
 import { errorHandlerMiddleware } from "./middleware/error-handler.js";
+import fileUpload from "express-fileupload";
 
 // product router
 import { productRouter } from "./routes/productRoutes.js";
 
 const app = express();
+
+app.use(express.static("./public")); // make publicly available
 app.use(express.json());
+app.use(fileUpload());
 
 app.get("/", (req, res) => {
   res.send("<h1>File Upload Starter</h1>");
