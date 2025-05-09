@@ -3,6 +3,7 @@ import path from "path";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError } from "../errors/index.js";
 import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
 
 export const uploadProductImageLocal = async (req, res) => {
   const productImage = req.files;
@@ -68,7 +69,10 @@ export const uploadProductImage = async (req, res) => {
       console.log(error);
     });
 
-  console.log(uploadResult);
+  //remove file once done with cloudinary
+  fs.unlinkSync(req.files.image.tempFilePath);
+
+  res.status(StatusCodes.OK).json({ image: { src: uploadResult.secure_url } });
 
   // // Optimize delivery by resizing and applying auto-format and auto-quality
   // const optimizeUrl = cloudinary.url("shoes", {
