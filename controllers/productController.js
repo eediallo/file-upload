@@ -21,6 +21,14 @@ export const createProduct = async (req, res) => {
   }
 };
 
-export const getAllProducts = (req, res) => {
-  res.send("Get all products");
+export const getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find({});
+    res.status(StatusCodes.OK).json({ success: true, products });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      msg: "Something went wrong, please try again later.",
+    });
+  }
 };
