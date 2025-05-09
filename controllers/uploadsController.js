@@ -50,15 +50,17 @@ export const uploadProductImage = async (req, res) => {
     throw new BadRequestError(`Image size must be less than ${maxSize}`);
   }
 
-  const imagePath = new URL(
-    `../public/uploads/${productImage.image.name}`,
-    import.meta.url
-  ).pathname;
-  console.log(imagePath);
-  await productImage.image.mv(imagePath);
+  //LEAVE HERE FOR REFERENCE
+  // const imagePath = new URL(
+  //   `../public/uploads/${productImage.image.name}`,
+  //   import.meta.url
+  // ).pathname;
+
+  // await productImage.image.mv(imagePath);
+
   // Upload an image
   const uploadResult = await cloudinary.uploader
-    .upload(imagePath, {
+    .upload(req.files.image.tempFilePath, {
       use_filename: true,
       folder: "upload-file",
     })
