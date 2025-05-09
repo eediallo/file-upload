@@ -1,6 +1,5 @@
 import path from "path";
 
-import { Product } from "../models/Product.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError } from "../errors/index.js";
 
